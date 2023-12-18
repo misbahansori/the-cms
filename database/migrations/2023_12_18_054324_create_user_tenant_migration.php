@@ -8,20 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('user_tenant_migration', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('tenant_id')->constrained()->cascadeOnDelete();
-            $table->string('slug');
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->timestamps();
 
-            $table->unique(['tenant_id', 'slug']);
+            $table->unique(['user_id', 'tenant_id']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('user_tenant_migration');
     }
 };
