@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->foreign('tenant_id');
+            $table->foreignId('tenant_id');
             $table->foreignId('parent_id')->nullable();
             $table->string('slug');
             $table->string('name');
