@@ -4,13 +4,21 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use App\Models\Category;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Illuminate\Validation\Rules\Unique;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Actions\Action;
 use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CategoryResource\RelationManagers;
@@ -25,18 +33,38 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('tenant_id')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('parent_id')
-                    ->numeric(),
+                Grid::make()
+                    ->schema([
+                        Select::make('parent_id')
+                            ->relationship('parent', 'name')
+                            ->label('Parent Category')
+                            ->preload()
+                            ->searchable()
+                    ])
+                    ->columnSpanFull(),
                 TextInput::make('slug')
+                    ->unique(
+                        modifyRuleUsing: fn (Unique $rule) => $rule->where('tenant_id', Filament::getTenant()->id),
+                        ignoreRecord: true
+                    )
+                    ->suffixAction(
+                        fn (): Action  =>  Action::make('generate_slug')
+                            ->icon('heroicon-o-arrow-path')
+                            ->tooltip('Generate Slug')
+                            ->color('success')
+                            ->action(function (Get $get, Set $set) {
+                                $name = $get('name');
+                                $set('slug', Str::slug($name));
+                            }),
+                    )
+                    ->alphaDash()
                     ->required()
                     ->maxLength(255),
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
                 Textarea::make('description')
+                    ->rows(3)
                     ->columnSpanFull(),
             ]);
     }
