@@ -12,6 +12,7 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
+use FilamentTiptapEditor\TiptapEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
@@ -46,7 +47,7 @@ class PostResource extends Resource
                                 Textarea::make('excerpt')
                                     ->required()
                                     ->maxLength(160),
-                                Textarea::make('content')
+                                TiptapEditor::make('content')
                                     ->required()
                                     ->columnSpanFull(),
                             ])
