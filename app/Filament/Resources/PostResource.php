@@ -49,7 +49,8 @@ class PostResource extends Resource
                                     ->maxLength(160),
                                 TiptapEditor::make('content')
                                     ->required()
-                                    ->columnSpanFull(),
+                                    ->columnSpanFull()
+                                    ->extraInputAttributes(['style' => 'min-height: 12rem;']),
                             ])
                     ]),
             ]);
@@ -59,15 +60,13 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('tenant.name')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('slug')
-                    ->searchable(),
                 TextColumn::make('title')
-                    ->searchable(),
+                    ->description(fn (Post $record) => $record->slug)
+                    ->sortable()
+                    ->searchable(['title', 'slug']),
                 TextColumn::make('excerpt')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('published_at')
                     ->dateTime()
                     ->sortable(),
