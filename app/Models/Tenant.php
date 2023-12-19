@@ -16,6 +16,11 @@ class Tenant extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function taxonomies(): HasMany
+    {
+        return $this->hasMany(Taxonomy::class);
+    }
+
     public function categories(): HasMany
     {
         return $this->hasMany(Category::class);
