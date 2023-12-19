@@ -30,4 +30,9 @@ class Tenant extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    public function media(): HasMany
+    {
+        return $this->hasMany(Media::class);
+    }
 }
