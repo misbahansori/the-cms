@@ -20,7 +20,11 @@ class TagResource extends Resource
 {
     protected static ?string $model = Tag::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
+
+    protected static ?string $navigationParentItem = 'Posts';
+
+    protected static ?string $navigationGroup = 'Articles';
 
     public static function form(Form $form): Form
     {
@@ -49,6 +53,7 @@ class TagResource extends Resource
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('description')
+                    ->columnSpanFull()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
@@ -84,8 +89,8 @@ class TagResource extends Resource
     {
         return [
             'index' => Pages\ListTags::route('/'),
-            'create' => Pages\CreateTag::route('/create'),
-            'edit' => Pages\EditTag::route('/{record}/edit'),
+            // 'create' => Pages\CreateTag::route('/create'),
+            // 'edit' => Pages\EditTag::route('/{record}/edit'),
         ];
     }
 }

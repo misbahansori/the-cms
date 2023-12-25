@@ -7,7 +7,6 @@ use App\Models\Post;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use RalphJSmit\Filament\SEO\SEO;
@@ -33,7 +32,9 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    protected static ?string $navigationGroup = 'Articles';
 
     public static function form(Form $form): Form
     {
