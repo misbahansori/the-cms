@@ -18,6 +18,13 @@ return new class extends Migration
 
             $table->unique(['tenant_id', 'slug']);
         });
+
+        Schema::create('tag_post', function (Blueprint $table) {
+            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('post_id')->constrained()->cascadeOnDelete();
+
+            $table->primary(['post_id', 'tag_id']);
+        });
     }
 
     public function down(): void
