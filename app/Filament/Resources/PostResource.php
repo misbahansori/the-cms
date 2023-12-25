@@ -8,6 +8,7 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 
+use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use RalphJSmit\Filament\SEO\SEO;
 use Filament\Forms\Components\Grid;
@@ -23,7 +24,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\PostResource\Pages;
+use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Awcodes\Curator\Components\Tables\CuratorColumn;
 use App\Filament\Resources\PostResource\RelationManagers;
 
 class PostResource extends Resource
@@ -56,9 +59,18 @@ class PostResource extends Resource
                                             )
                                             ->slug(source: 'title'),
                                         Textarea::make('excerpt')
+                                            ->rows(3)
                                             ->required()
-                                            ->helperText('The excerpt is a short summary of the post that will be displayed on the post card.')
+                                            ->reactive()
+                                            ->helperText(function (?string $state): string {
+                                                return (string) Str::of(strlen($state))
+                                                    ->append(' / ')
+                                                    ->append(160 . ' ')
+                                                    ->append(Str::of(__('filament-seo::translations.characters'))->lower());
+                                            })
                                             ->maxLength(160),
+                                        CuratorPicker::make('featured_image_id')
+                                            ->relationship('featuredImage', 'id'),
                                         TiptapEditor::make('content')
                                             ->required()
                                             ->columnSpanFull()
@@ -123,8 +135,12 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
+                CuratorColumn::make('featured_image_id')
+                    ->label('Featured Image')
+                    ->size(120),
                 TextColumn::make('title')
-                    ->description(fn (Post $record) => $record->slug)
+                    ->wrap()
+                    ->description(fn (Post $record) => Str::limit($record->slug, 50))
                     ->sortable()
                     ->searchable(['title', 'slug']),
                 TextColumn::make('excerpt')

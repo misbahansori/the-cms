@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Tag;
+use App\Models\Post;
+use App\Models\Media;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Model;
@@ -25,9 +29,10 @@ class AppServiceProvider extends ServiceProvider
         Model::unguard();
 
         Relation::enforceMorphMap([
-            'post'      => \App\Models\Post::class,
-            'category' => \App\Models\Category::class,
-            'tag'       => \App\Models\Tag::class,
+            'post'      => Post::class,
+            'category' => Category::class,
+            'tag'       => Tag::class,
+            'media'     => Media::class,
         ]);
 
         TextInput::macro('slug', function (string $source) {

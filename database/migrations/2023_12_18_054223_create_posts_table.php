@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('title');
             $table->string('excerpt');
+            $table->foreignId('featured_image_id')->nullable()->constrained('media')->nullOnDelete();
             $table->longText('content');
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
