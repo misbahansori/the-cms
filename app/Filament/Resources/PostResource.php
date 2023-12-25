@@ -16,6 +16,7 @@ use FilamentTiptapEditor\TiptapEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\PostResource\Pages;
@@ -51,6 +52,12 @@ class PostResource extends Resource
                                     ->required()
                                     ->columnSpanFull()
                                     ->extraInputAttributes(['style' => 'min-height: 12rem;']),
+                            ]),
+                        Section::make()
+                            ->columnSpan(1)
+                            ->schema([
+                                DateTimePicker::make('published_at')
+                                    ->nullable()
                             ])
                     ]),
             ]);
