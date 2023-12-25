@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 
 use Filament\Resources\Resource;
+use RalphJSmit\Filament\SEO\SEO;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
@@ -37,28 +38,37 @@ class PostResource extends Resource
             ->schema([
                 Grid::make(3)
                     ->schema([
-                        Section::make()
+                        Grid::make(1)
                             ->columnSpan(2)
                             ->schema([
-                                TextInput::make('title')
-                                    ->required()
-                                    ->maxLength(255),
-                                TextInput::make('slug')
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->hintIcon(
-                                        'heroicon-m-question-mark-circle',
-                                        tooltip: fn () => 'The slug should contain the seo keywords for the post.'
-                                    )
-                                    ->slug(source: 'title'),
-                                Textarea::make('excerpt')
-                                    ->required()
-                                    ->helperText('The excerpt is a short summary of the post that will be displayed on the post card.')
-                                    ->maxLength(160),
-                                TiptapEditor::make('content')
-                                    ->required()
-                                    ->columnSpanFull()
-                                    ->extraInputAttributes(['style' => 'min-height: 12rem;']),
+                                Section::make()
+                                    ->columnSpan(2)
+                                    ->schema([
+                                        TextInput::make('title')
+                                            ->required()
+                                            ->maxLength(255),
+                                        TextInput::make('slug')
+                                            ->required()
+                                            ->maxLength(255)
+                                            ->hintIcon(
+                                                'heroicon-m-question-mark-circle',
+                                                tooltip: fn () => 'The slug should contain the seo keywords for the post.'
+                                            )
+                                            ->slug(source: 'title'),
+                                        Textarea::make('excerpt')
+                                            ->required()
+                                            ->helperText('The excerpt is a short summary of the post that will be displayed on the post card.')
+                                            ->maxLength(160),
+                                        TiptapEditor::make('content')
+                                            ->required()
+                                            ->columnSpanFull()
+                                            ->extraInputAttributes(['style' => 'min-height: 12rem;']),
+                                    ]),
+                                Section::make('SEO')
+                                    ->columnSpan(2)
+                                    ->schema([
+                                        SEO::make(),
+                                    ]),
                             ]),
                         Grid::make(1)
                             ->columnSpan(1)

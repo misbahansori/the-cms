@@ -11,6 +11,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Actions\Action;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
+
+        Relation::enforceMorphMap([
+            'post'      => \App\Models\Post::class,
+            'category' => \App\Models\Category::class,
+            'tag'       => \App\Models\Tag::class,
+        ]);
 
         TextInput::macro('slug', function (string $source) {
             return $this->unique(
