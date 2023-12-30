@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\AuthorResource\Pages;
+namespace App\Filament\Tenant\Resources\AuthorResource\Pages;
 
-use App\Filament\Resources\AuthorResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Tenant\Resources\AuthorResource;
 
 class ListAuthors extends ListRecords
 {

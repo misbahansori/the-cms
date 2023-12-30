@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Tenant\Resources;
 
 use App\Models\Tag;
 use Filament\Forms;
@@ -15,9 +15,10 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\TagResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\TagResource\RelationManagers;
+use App\Filament\Tenant\Resources\TagResource\Pages\EditTag;
+use App\Filament\Tenant\Resources\TagResource\Pages\ListTags;
+use App\Filament\Tenant\Resources\TagResource\Pages\CreateTag;
 
 class TagResource extends Resource
 {
@@ -107,9 +108,9 @@ class TagResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTags::route('/'),
-            'create' => Pages\CreateTag::route('/create'),
-            'edit' => Pages\EditTag::route('/{record}/edit'),
+            'index' => ListTags::route('/'),
+            'create' => CreateTag::route('/create'),
+            'edit' => EditTag::route('/{record}/edit'),
         ];
     }
 }

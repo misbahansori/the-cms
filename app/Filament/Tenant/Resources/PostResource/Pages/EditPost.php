@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\PostResource\Pages;
+namespace App\Filament\Tenant\Resources\PostResource\Pages;
 
 use Filament\Actions;
-use App\Filament\Resources\PostResource;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Tenant\Resources\PostResource;
 
 class EditPost extends EditRecord
 {

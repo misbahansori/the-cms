@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filament\Resources\PostResource\Pages;
+namespace App\Filament\Tenant\Resources\PostResource\Pages;
 
 use Filament\Actions;
 use Filament\Actions\Action;
-use App\Filament\Resources\PostResource;
 use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Tenant\Resources\PostResource;
 
 class CreatePost extends CreateRecord
 {

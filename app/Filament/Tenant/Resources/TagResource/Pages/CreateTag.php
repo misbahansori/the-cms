@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\TagResource\Pages;
+namespace App\Filament\Tenant\Resources\TagResource\Pages;
 
-use App\Filament\Resources\TagResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Tenant\Resources\TagResource;
 
 class CreateTag extends CreateRecord
 {

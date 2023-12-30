@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\TagResource\Pages;
+namespace App\Filament\Tenant\Resources\UserResource\Pages;
 
-use App\Filament\Resources\TagResource;
+use App\Filament\Tenant\Resources\UserResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListTags extends ListRecords
+class ListUsers extends ListRecords
 {
-    protected static string $resource = TagResource::class;
+    protected static string $resource = UserResource::class;
 
     protected function getHeaderActions(): array
     {

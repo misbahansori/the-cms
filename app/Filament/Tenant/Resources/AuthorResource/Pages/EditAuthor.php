@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\AuthorResource\Pages;
+namespace App\Filament\Tenant\Resources\AuthorResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
-use App\Filament\Resources\AuthorResource;
+use App\Filament\Tenant\Resources\AuthorResource;
 
 class EditAuthor extends EditRecord
 {

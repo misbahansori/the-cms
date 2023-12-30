@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Tenant\Resources;
 
 use Filament\Forms;
 use App\Models\User;
@@ -19,11 +19,12 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Actions\Action;
-use App\Filament\Resources\AuthorResource\Pages;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Awcodes\Curator\Components\Tables\CuratorColumn;
-use App\Filament\Resources\AuthorResource\RelationManagers;
+use App\Filament\Tenant\Resources\AuthorResource\Pages\EditAuthor;
+use App\Filament\Tenant\Resources\AuthorResource\Pages\ListAuthors;
+use App\Filament\Tenant\Resources\AuthorResource\Pages\CreateAuthor;
 
 class AuthorResource extends Resource
 {
@@ -133,9 +134,9 @@ class AuthorResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAuthors::route('/'),
-            'create' => Pages\CreateAuthor::route('/create'),
-            'edit' => Pages\EditAuthor::route('/{record}/edit'),
+            'index' => ListAuthors::route('/'),
+            'create' => CreateAuthor::route('/create'),
+            'edit' => EditAuthor::route('/{record}/edit'),
         ];
     }
 }

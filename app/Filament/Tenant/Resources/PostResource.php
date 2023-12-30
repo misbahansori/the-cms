@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Tenant\Resources;
 
 use Filament\Forms;
 use App\Models\Post;
@@ -22,11 +22,12 @@ use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\DateTimePicker;
-use App\Filament\Resources\PostResource\Pages;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Awcodes\Curator\Components\Tables\CuratorColumn;
-use App\Filament\Resources\PostResource\RelationManagers;
+use App\Filament\Tenant\Resources\PostResource\Pages\EditPost;
+use App\Filament\Tenant\Resources\PostResource\Pages\ListPosts;
+use App\Filament\Tenant\Resources\PostResource\Pages\CreatePost;
 
 class PostResource extends Resource
 {
@@ -190,9 +191,9 @@ class PostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPosts::route('/'),
-            'create' => Pages\CreatePost::route('/create'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),
+            'index' => ListPosts::route('/'),
+            'create' => CreatePost::route('/create'),
+            'edit' => EditPost::route('/{record}/edit'),
         ];
     }
 }

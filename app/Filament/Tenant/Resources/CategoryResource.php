@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Tenant\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
@@ -22,9 +22,10 @@ use Illuminate\Validation\Rules\Unique;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Actions\Action;
-use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Tenant\Resources\CategoryResource\Pages\EditCategory;
+use App\Filament\Tenant\Resources\CategoryResource\Pages\CreateCategory;
+use App\Filament\Tenant\Resources\CategoryResource\Pages\ListCategories;
 
 class CategoryResource extends Resource
 {
@@ -124,9 +125,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => ListCategories::route('/'),
+            'create' => CreateCategory::route('/create'),
+            'edit' => EditCategory::route('/{record}/edit'),
         ];
     }
 }

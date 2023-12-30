@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\PostResource\Pages;
+namespace App\Filament\Tenant\Resources\PostResource\Pages;
 
-use App\Filament\Resources\PostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Tenant\Resources\PostResource;
 
 class ListPosts extends ListRecords
 {
