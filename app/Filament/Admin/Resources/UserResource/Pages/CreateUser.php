@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Filament\Tenant\Resources\UserResource\Pages;
+namespace App\Filament\Admin\Resources\UserResource\Pages;
 
-use App\Filament\Tenant\Resources\UserResource;
+
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+use App\Filament\Admin\Resources\UserResource;
 
 class CreateUser extends CreateRecord
 {

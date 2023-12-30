@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\HasTenants;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Filament\Models\Contracts\FilamentUser;
+use Spatie\ModelFlags\Models\Concerns\HasFlags;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,6 +24,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     use HasFactory;
     use Notifiable;
     use HasSEO;
+    use HasFlags;
 
     protected $hidden = [
         'password',
