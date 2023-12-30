@@ -8,6 +8,9 @@ use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use RalphJSmit\Filament\SEO\SEO;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
@@ -30,15 +33,31 @@ class TagResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('slug')
-                    ->slug(source: 'name')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Textarea::make('description')
-                    ->rows(3)
+                Grid::make(3)
+                    ->schema([
+                        Grid::make(1)
+                            ->columnSpan(2)
+                            ->schema([
+                                Section::make()
+                                    ->schema([
+                                        TextInput::make('slug')
+                                            ->slug(source: 'name')
+                                            ->required()
+                                            ->maxLength(255),
+                                        TextInput::make('name')
+                                            ->required()
+                                            ->maxLength(255),
+                                        Textarea::make('description')
+                                            ->rows(3)
+                                    ]),
+                                Section::make('SEO')
+                                    ->columnSpan(2)
+                                    ->schema([
+                                        SEO::make(),
+                                    ])
+                            ]),
+                    ]),
+
             ]);
     }
 
@@ -89,8 +108,8 @@ class TagResource extends Resource
     {
         return [
             'index' => Pages\ListTags::route('/'),
-            // 'create' => Pages\CreateTag::route('/create'),
-            // 'edit' => Pages\EditTag::route('/{record}/edit'),
+            'create' => Pages\CreateTag::route('/create'),
+            'edit' => Pages\EditTag::route('/{record}/edit'),
         ];
     }
 }

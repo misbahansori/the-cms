@@ -71,6 +71,7 @@ class PostResource extends Resource
                                             })
                                             ->maxLength(160),
                                         CuratorPicker::make('featured_image_id')
+                                            ->label('Featured Image')
                                             ->relationship('featuredImage', 'id'),
                                         TiptapEditor::make('content')
                                             ->required()
@@ -140,11 +141,13 @@ class PostResource extends Resource
                     ->label('Featured Image')
                     ->size(120),
                 TextColumn::make('title')
-                    ->wrap()
+                    ->limit(50)
                     ->description(fn (Post $record) => Str::limit($record->slug, 50))
                     ->sortable()
                     ->searchable(['title', 'slug']),
                 TextColumn::make('excerpt')
+                    ->wrap()
+                    ->limit(100)
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('published_at')

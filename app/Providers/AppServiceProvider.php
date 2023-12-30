@@ -8,13 +8,16 @@ use App\Models\Media;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use App\Models\Category;
+use Filament\Pages\Page;
 use Illuminate\Support\Str;
 use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Forms\Components\Actions\Action;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
@@ -51,5 +54,12 @@ class AppServiceProvider extends ServiceProvider
                 )
                 ->alphaDash();
         });
+
+        Page::$reportValidationErrorUsing = function (ValidationException $exception) {
+            Notification::make()
+                ->title($exception->getMessage())
+                ->danger()
+                ->send();
+        };
     }
 }

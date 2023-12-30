@@ -12,8 +12,10 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
+use RalphJSmit\Filament\SEO\SEO;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Validation\Rules\Unique;
@@ -38,25 +40,40 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Grid::make()
+                Grid::make(3)
                     ->schema([
-                        Select::make('parent_id')
-                            ->relationship('parent', 'name')
-                            ->label('Parent Category')
-                            ->preload()
-                            ->searchable()
+                        Grid::make(1)
+                            ->columnSpan(2)
+                            ->schema([
+                                Section::make()
+                                    ->schema([
+                                        Grid::make()
+                                            ->schema([
+                                                Select::make('parent_id')
+                                                    ->relationship('parent', 'name')
+                                                    ->label('Parent Category')
+                                                    ->preload()
+                                                    ->searchable()
+                                            ])
+                                            ->columnSpanFull(),
+                                        TextInput::make('slug')
+                                            ->slug(source: 'name')
+                                            ->required()
+                                            ->maxLength(255),
+                                        TextInput::make('name')
+                                            ->required()
+                                            ->maxLength(255),
+                                        Textarea::make('description')
+                                            ->rows(3)
+                                            ->columnSpanFull(),
+                                    ]),
+                                Section::make('SEO')
+                                    ->columnSpan(2)
+                                    ->schema([
+                                        SEO::make(),
+                                    ])
+                            ])
                     ])
-                    ->columnSpanFull(),
-                TextInput::make('slug')
-                    ->slug(source: 'name')
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Textarea::make('description')
-                    ->rows(3)
-                    ->columnSpanFull(),
             ]);
     }
 
@@ -108,8 +125,8 @@ class CategoryResource extends Resource
     {
         return [
             'index' => Pages\ListCategories::route('/'),
-            // 'create' => Pages\CreateCategory::route('/create'),
-            // 'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'create' => Pages\CreateCategory::route('/create'),
+            'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }
 }
