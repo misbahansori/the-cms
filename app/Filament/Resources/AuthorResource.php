@@ -90,7 +90,7 @@ class AuthorResource extends Resource
     {
         return $table
             ->columns([
-                CuratorColumn::make('avatar')
+                CuratorColumn::make('avatar_id')
                     ->width(80)
                     ->height(80)
                     ->circular(),

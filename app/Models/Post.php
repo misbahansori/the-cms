@@ -29,4 +29,9 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class, 'tag_post');
     }
+
+    public function authors(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'author_post', 'author_id', 'post_id');
+    }
 }

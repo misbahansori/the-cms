@@ -90,7 +90,12 @@ class PostResource extends Resource
                                 Section::make()
                                     ->schema([
                                         DateTimePicker::make('published_at')
-                                            ->nullable()
+                                            ->nullable(),
+                                        Select::make('authors')
+                                            ->relationship('authors', 'name')
+                                            ->preload()
+                                            ->searchable()
+                                            ->multiple()
                                     ]),
                                 Section::make()
                                     ->label('Relationship')
