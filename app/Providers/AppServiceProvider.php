@@ -6,6 +6,7 @@ use App\Models\Tag;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Media;
+use App\Models\Tenant;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use App\Models\Category;
@@ -39,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
             'category' => Category::class,
             'tag'      => Tag::class,
             'media'    => Media::class,
+            'tenant'   => Tenant::class
         ]);
 
         TextInput::macro('slug', function (string $source) {
