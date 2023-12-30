@@ -10,7 +10,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\HasTenants;
+use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Filament\Models\Contracts\FilamentUser;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -20,6 +22,7 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use HasSEO;
 
     protected $hidden = [
         'password',
@@ -40,6 +43,11 @@ class User extends Authenticatable implements FilamentUser, HasTenants
     public function getTenants(Panel $panel): Collection
     {
         return $this->tenants;
+    }
+
+    public function Tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
     }
 
     public function tenants(): BelongsToMany

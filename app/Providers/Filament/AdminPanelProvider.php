@@ -7,6 +7,7 @@ use Filament\Panel;
 use Filament\Widgets;
 use App\Models\Tenant;
 use Filament\PanelProvider;
+use Awcodes\Curator\CuratorPlugin;
 use Filament\Support\Colors\Color;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
@@ -30,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('/')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -58,13 +59,18 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugins([
-                \Awcodes\Curator\CuratorPlugin::make()
+                CuratorPlugin::make()
                     ->label('Media')
                     ->pluralLabel('Media')
                     ->navigationIcon('heroicon-o-photo')
                     ->navigationGroup('Content')
                     ->navigationSort(3)
                     ->navigationCountBadge()
+            ])
+            ->navigationGroups([
+                'Articles',
+                'Authors',
+                'Content'
             ]);
     }
 }

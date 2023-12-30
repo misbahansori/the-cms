@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Tag;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Media;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Forms\Components\TextInput;
+use Filament\Navigation\NavigationGroup;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\Actions\Action;
 use Illuminate\Validation\ValidationException;
@@ -32,10 +34,11 @@ class AppServiceProvider extends ServiceProvider
         Model::unguard();
 
         Relation::enforceMorphMap([
-            'post'      => Post::class,
+            'user'     => User::class,
+            'post'     => Post::class,
             'category' => Category::class,
-            'tag'       => Tag::class,
-            'media'     => Media::class,
+            'tag'      => Tag::class,
+            'media'    => Media::class,
         ]);
 
         TextInput::macro('slug', function (string $source) {
