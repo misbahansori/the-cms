@@ -26,3 +26,9 @@ Route::prefix('{tenant}')
         Route::get('/posts', [PostController::class, 'index']);
         Route::get('/posts/{slug}', [PostController::class, 'show']);
     });
+
+
+Route::get('/welcome', function () {
+    $post = Post::first();
+    return view('welcome', compact('post'));
+});

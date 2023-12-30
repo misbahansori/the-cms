@@ -13,8 +13,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/asd', function () {
-    $post = Post::first();
-    return view('welcome', compact('post'));
-});
