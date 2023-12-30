@@ -11,6 +11,11 @@ class Tenant extends Model
 {
     use HasFactory;
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
