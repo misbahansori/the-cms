@@ -11,21 +11,25 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $tenant = Tenant::factory()->create([
+        $tenant = Tenant::create([
             'slug' => 'belajarai',
             'name' => 'belajarai',
         ]);
 
-        $misbah = User::factory()->create([
+        $misbah = User::create([
             'name'     => 'Misbah Ansori',
+            'slug'     => 'misbah-ansori',
             'email'    => 'misbah.ansori24@gmail.com',
+            'password' => bcrypt('password')
         ]);
 
         $misbah->flag(Flag::ADMIN);
 
-        $bowo = User::factory()->create([
+        $bowo = User::create([
             'name'     => 'Firdaus Wibowo',
-            'email'    => 'bowo@gmail.com'
+            'slug'     => 'firdaus-wibowo',
+            'email'    => 'bowo@gmail.com',
+            'password' => bcrypt('password'),
         ]);
 
         $bowo->flag(Flag::ADMIN);
