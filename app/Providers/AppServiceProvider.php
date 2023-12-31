@@ -51,13 +51,14 @@ class AppServiceProvider extends ServiceProvider
                 ->suffixAction(
                     fn (): Action  =>  Action::make('generate_slug')
                         ->icon('heroicon-o-arrow-path')
-                        ->tooltip('Generate Slug')
+                        ->tooltip('Generate Slug from ' . Str::ucfirst($source))
                         ->color('success')
                         ->action(
                             fn (Get $get, Set $set) => $set('slug', Str::slug($get($source)))
                         ),
                 )
-                ->alphaDash();
+                ->helperText('It will be automatically formatted using the correct characters and case.')
+                ->dehydrateStateUsing(fn (string $state) => Str::slug($state));
         });
 
         Page::$reportValidationErrorUsing = function (ValidationException $exception) {

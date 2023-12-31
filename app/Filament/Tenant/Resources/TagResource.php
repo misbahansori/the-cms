@@ -7,6 +7,7 @@ use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use RalphJSmit\Filament\SEO\SEO;
 use Filament\Forms\Components\Grid;
