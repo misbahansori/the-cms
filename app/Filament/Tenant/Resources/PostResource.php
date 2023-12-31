@@ -156,9 +156,14 @@ class PostResource extends Resource
                     ->limit(100)
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('published_at')
-                    ->dateTime()
-                    ->sortable(),
+                TextColumn::make('publish_status')
+                    ->label('Status')
+                    ->color(fn (Post $record) => match ($record->publish_status) {
+                        Post::STATUS_DRAFT => 'gray',
+                        Post::STATUS_PUBLISHED => 'success',
+                        Post::STATUS_SCHEDULED => 'info',
+                    })
+                    ->badge(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -173,6 +178,8 @@ class PostResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
