@@ -34,6 +34,9 @@ class TenantResource extends Resource
                 TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
+                TextInput::make('site_url')
+                    ->required()
+                    ->maxLength(255),
                 Select::make('users')
                     ->relationship('users', 'name')
                     ->multiple()
@@ -46,9 +49,17 @@ class TenantResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('slug')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('users.name')
                     ->searchable(),
+                TextColumn::make('site_url')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
