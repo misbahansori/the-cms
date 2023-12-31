@@ -82,14 +82,13 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('parent.name')
-                    ->sortable(),
-                TextColumn::make('slug')
-                    ->sortable()
-                    ->searchable(),
                 TextColumn::make('name')
+                    ->description(fn (Category $record) => $record->slug)
                     ->sortable()
-                    ->searchable(),
+                    ->searchable(['name', 'slug']),
+                TextColumn::make('parent.name')
+                    ->label('Parent Category')
+                    ->sortable(),
                 TextColumn::make('description')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),

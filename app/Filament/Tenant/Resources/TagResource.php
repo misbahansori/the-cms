@@ -66,10 +66,8 @@ class TagResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('slug')
-                    ->sortable()
-                    ->searchable(),
                 TextColumn::make('name')
+                    ->description(fn (Tag $tag) => $tag->slug)
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('description')

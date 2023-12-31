@@ -95,8 +95,10 @@ class PostResource extends Resource
                                 Section::make()
                                     ->schema([
                                         Select::make('status')
+                                            ->label('Review status')
                                             ->options(Status::class),
                                         DateTimePicker::make('published_at')
+                                            ->label('Publish date')
                                             ->nullable(),
                                         Select::make('authors')
                                             ->relationship('authors', 'name')
