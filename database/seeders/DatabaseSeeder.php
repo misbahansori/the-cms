@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Flag;
 use App\Models\User;
 use App\Models\Tenant;
 use Illuminate\Database\Seeder;
@@ -11,14 +12,25 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $tenant = Tenant::factory()->create([
-            'name' => 'test',
+            'slug' => 'belajarai',
+            'name' => 'belajarai',
         ]);
 
-        $user = User::factory()->create([
+        $misbah = User::factory()->create([
             'name'     => 'Misbah Ansori',
             'email'    => 'misbah.ansori24@gmail.com',
         ]);
 
-        $tenant->users()->attach($user);
+        $misbah->flag(Flag::ADMIN);
+
+        $bowo = User::factory()->create([
+            'name'     => 'Firdaus Wibowo',
+            'email'    => 'bowo@gmail.com'
+        ]);
+
+        $bowo->flag(Flag::ADMIN);
+
+        $tenant->users()->attach($misbah);
+        $tenant->users()->attach($bowo);
     }
 }

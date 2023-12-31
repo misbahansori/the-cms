@@ -8,6 +8,7 @@ use App\Models\Tenant;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,7 +34,10 @@ class TenantResource extends Resource
                 TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
-
+                Select::make('users')
+                    ->relationship('users', 'name')
+                    ->multiple()
+                    ->preload(),
             ]);
     }
 
@@ -59,6 +63,11 @@ class TenantResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('login')
+                    ->label('Login to Tenant')
+                    ->color('info')
+                    ->icon('heroicon-o-arrow-left-on-rectangle')
+                    ->url(fn (Tenant $tenant) => route('filament.tenant.pages.dashboard', $tenant)),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
