@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use App\Models\Flag;
 use App\Models\User;
 use App\Models\Tenant;
+use Database\Seeders\TagSeeder;
 use Illuminate\Database\Seeder;
+use Database\Seeders\CategorySeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,5 +38,13 @@ class DatabaseSeeder extends Seeder
 
         $tenant->users()->attach($misbah);
         $tenant->users()->attach($bowo);
+
+        if (app()->environment('local')) {
+            $this->call([
+                TagSeeder::class,
+                CategorySeeder::class,
+                PostSeeder::class,
+            ]);
+        }
     }
 }
