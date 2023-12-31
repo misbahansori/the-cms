@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use RalphJSmit\Filament\SEO\SEO;
 use Filament\Forms\Components\Grid;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
@@ -19,7 +20,9 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\DateTimePicker;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
@@ -163,7 +166,12 @@ class PostResource extends Resource
                         Post::STATUS_PUBLISHED => 'success',
                         Post::STATUS_SCHEDULED => 'info',
                     })
+                    ->tooltip(fn (Post $record) => $record->published_at?->format('d M Y H:i'))
                     ->badge(),
+                TextColumn::make('authors.name')
+                    ->label('Author')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -174,7 +182,30 @@ class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Filter::make('publish_status')
+                    ->form([
+                        Select::make('publish_status')
+                            ->options([
+                                'All' => 'All',
+                                Post::STATUS_DRAFT => 'Draft',
+                                Post::STATUS_PUBLISHED => 'Published',
+                                Post::STATUS_SCHEDULED => 'Scheduled',
+                            ])
+                            ->default('All'),
+                    ])
+                    ->query(fn (Builder $query, $data) => match ($data['publish_status']) {
+                        Post::STATUS_DRAFT => $query->whereNull('published_at'),
+                        Post::STATUS_PUBLISHED => $query->whereNotNull('published_at')
+                            ->where('published_at', '<=', now()),
+                        Post::STATUS_SCHEDULED => $query->whereNotNull('published_at')
+                            ->where('published_at', '>', now()),
+                        default => $query,
+                    }),
+                SelectFilter::make('authors')
+                    ->relationship('authors', 'name')
+                    ->multiple()
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -185,7 +216,8 @@ class PostResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array

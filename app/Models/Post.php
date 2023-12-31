@@ -41,7 +41,7 @@ class Post extends Model
 
     public function authors(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'author_post', 'author_id', 'post_id');
+        return $this->belongsToMany(User::class, 'author_post', 'post_id', 'author_id');
     }
 
     protected function publishStatus(): Attribute
