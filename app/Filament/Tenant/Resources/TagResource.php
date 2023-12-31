@@ -41,11 +41,11 @@ class TagResource extends Resource
                             ->schema([
                                 Section::make()
                                     ->schema([
-                                        TextInput::make('slug')
-                                            ->slug(source: 'name')
+                                        TextInput::make('name')
                                             ->required()
                                             ->maxLength(255),
-                                        TextInput::make('name')
+                                        TextInput::make('slug')
+                                            ->slug(source: 'name')
                                             ->required()
                                             ->maxLength(255),
                                         Textarea::make('description')

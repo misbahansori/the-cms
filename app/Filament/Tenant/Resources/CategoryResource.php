@@ -57,11 +57,11 @@ class CategoryResource extends Resource
                                                     ->searchable()
                                             ])
                                             ->columnSpanFull(),
-                                        TextInput::make('slug')
-                                            ->slug(source: 'name')
+                                        TextInput::make('name')
                                             ->required()
                                             ->maxLength(255),
-                                        TextInput::make('name')
+                                        TextInput::make('slug')
+                                            ->slug(source: 'name')
                                             ->required()
                                             ->maxLength(255),
                                         Textarea::make('description')
