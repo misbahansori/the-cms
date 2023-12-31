@@ -16,19 +16,9 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::prefix('{tenant}')
     ->scopeBindings()
     ->group(function () {
         Route::get('/posts', [PostController::class, 'index']);
-        Route::get('/posts/{slug}', [PostController::class, 'show']);
+        Route::get('/posts/{id}', [PostController::class, 'show']);
     });
-
-
-Route::get('/welcome', function () {
-    $post = Post::first();
-    return view('welcome', compact('post'));
-});

@@ -6,20 +6,33 @@ use App\Models\Post;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
 use App\Http\Resources\PostResource;
+use Spatie\QueryBuilder\QueryBuilder;
 use App\Http\Resources\SimplePostResource;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Tenant $tenant, Request $request)
     {
-        $posts = Post::latest()->get();
+        $request->validate([
+            'per_page' => 'integer|min:1|max:100',
+        ]);
+
+        $perPage = $request->get('per_page', 10);
+
+        $posts = QueryBuilder::for(Post::class)
+            ->allowedIncludes(['authors'])
+            ->allowedSorts(['title', 'published_at'])
+            ->paginate($perPage);
 
         return SimplePostResource::collection($posts);
     }
 
-    public function show(Tenant $tenant, string $slug)
+    public function show(Tenant $tenant, string $id)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
+        $post = QueryBuilder::for(Post::class)
+            ->allowedIncludes(['authors'])
+            ->where('id', $id)
+            ->firstOrFail();
 
         return PostResource::make($post);
     }

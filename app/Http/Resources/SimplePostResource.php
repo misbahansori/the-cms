@@ -9,6 +9,14 @@ class SimplePostResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id'             => $this->id,
+            'slug'           => $this->slug,
+            'title'          => $this->title,
+            'excerpt'        => $this->excerpt,
+            'featured_image' => ImageResource::make($this->featuredImage),
+            'published_at'   => $this->published_at,
+            'authors'        => AuthorResource::collection($this->whenLoaded('authors')),
+        ];
     }
 }
