@@ -8,6 +8,7 @@ use Filament\Widgets;
 use App\Models\Tenant;
 use Filament\PanelProvider;
 use Filament\Pages\Dashboard;
+use Filament\Navigation\MenuItem;
 use Awcodes\Curator\CuratorPlugin;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
@@ -75,6 +76,12 @@ class TenantPanelProvider extends PanelProvider
                 'Articles',
                 'Authors',
                 'Content'
+            ])
+            ->userMenuItems([
+                'admin' => MenuItem::make()
+                    ->label('Admin')
+                    ->icon('heroicon-o-cog')
+                    ->url('/admin'),
             ]);
     }
 }
