@@ -5,6 +5,7 @@ namespace App\Filament\Tenant\Resources;
 use Filament\Forms;
 use App\Models\Post;
 use Filament\Tables;
+use App\Enums\Status;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
@@ -93,6 +94,8 @@ class PostResource extends Resource
                             ->schema([
                                 Section::make()
                                     ->schema([
+                                        Select::make('status')
+                                            ->options(Status::class),
                                         DateTimePicker::make('published_at')
                                             ->nullable(),
                                         Select::make('authors')
@@ -159,15 +162,20 @@ class PostResource extends Resource
                     ->limit(100)
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('status')
+                    ->label('Review status')
+                    ->badge()
+                    ->toggleable(),
                 TextColumn::make('publish_status')
-                    ->label('Status')
+                    ->label('Publish status')
                     ->color(fn (Post $record) => match ($record->publish_status) {
                         Post::STATUS_DRAFT => 'gray',
                         Post::STATUS_PUBLISHED => 'success',
                         Post::STATUS_SCHEDULED => 'info',
                     })
                     ->tooltip(fn (Post $record) => $record->published_at?->format('d M Y H:i'))
-                    ->badge(),
+                    ->badge()
+                    ->toggleable(),
                 TextColumn::make('authors.name')
                     ->label('Author')
                     ->searchable()
@@ -182,6 +190,10 @@ class PostResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                SelectFilter::make('status')
+                    ->label('Review status')
+                    ->options(Status::class)
+                    ->default(null),
                 Filter::make('publish_status')
                     ->form([
                         Select::make('publish_status')

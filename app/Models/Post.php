@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Status;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Concerns\BelongsToTenant;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
@@ -22,6 +23,7 @@ class Post extends Model
 
     protected $casts = [
         'published_at' => 'datetime',
+        'status'       => Status::class,
     ];
 
     public function featuredImage(): BelongsTo
