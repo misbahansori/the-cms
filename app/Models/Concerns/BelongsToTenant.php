@@ -11,18 +11,15 @@ trait BelongsToTenant
 {
     protected static function bootBelongsToTenant()
     {
-        $tenant = Filament::getTenant() ?: request('tenant') ?: null;
+        static::creating(function (Model $model) {
+            $tenant = Filament::getTenant() ?: request('tenant') ?: null;
 
-        if (!$tenant || !($tenant instanceof Tenant)) {
-            return;
-        }
-
-        static::creating(function (Model $model) use ($tenant) {
-            $model->tenant_id = $tenant->id;
+            $model->tenant_id = $tenant?->id;
         });
 
-        static::addGlobalScope(function ($query) use ($tenant) {
-            if ($tenant) {
+        static::addGlobalScope(function ($query) {
+            $tenant = Filament::getTenant() ?: request('tenant') ?: null;
+            if ($tenant && $tenant instanceof Tenant) {
                 $query->where('tenant_id', $tenant->id);
             }
         });
