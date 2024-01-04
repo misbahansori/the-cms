@@ -20,10 +20,10 @@ php artisan clear-compiled
 php artisan optimize
 
 # Compile npm assets
-npm run prod
+npm run build
 
 # Run database migrations
-php artisan migrate --force
+php artisan migrate
 
 # Exit maintenance mode
 php artisan up
