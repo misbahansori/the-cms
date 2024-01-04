@@ -14,6 +14,7 @@ use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Filament\Http\Middleware\Authenticate;
+use App\Filament\Tenant\Pages\ChangePassword;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -78,10 +79,14 @@ class TenantPanelProvider extends PanelProvider
                 'Content'
             ])
             ->userMenuItems([
-                'admin' => MenuItem::make()
+                MenuItem::make()
                     ->label('Admin')
                     ->icon('heroicon-o-cog')
                     ->url('/admin'),
+                MenuItem::make()
+                    ->label('Change Password')
+                    ->icon('heroicon-o-lock-closed')
+                    ->url(fn () => ChangePassword::getUrl()),
             ]);
     }
 }
