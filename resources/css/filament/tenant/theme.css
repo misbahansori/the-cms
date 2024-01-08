@@ -4,3 +4,39 @@
 @import "/vendor/awcodes/filament-curator/resources/css/plugin.css";
 
 @config 'tailwind.config.js';
+
+.fi-sidebar-nav {
+    @apply bg-white border-r border-gray-200 dark:bg-gray-900 dark:border-gray-800;
+}
+.fi-sidebar-header {
+}
+.fi-logo {
+}
+.fi-sidebar {
+    @apply flex flex-col justify-start;
+}
+.fi-sidebar-nav {
+    @apply flex-1 flex flex-col justify-start bg-white mt-px dark:bg-gray-900;
+}
+/*
+.fi-sidebar-group > div > span {
+    @apply text-gray-400 font-medium;
+}
+.fi-sidebar-item a {
+    @apply text-gray-200 hover:text-white hover:bg-gray-800;
+}
+.fi-sidebar-item a span {
+    @apply text-inherit;
+}
+.fi-sidebar-item-active a {
+    @apply text-primary-400 bg-primary-50 hover:text-primary-400;
+}
+.fi-sidebar-item-active a span {
+    @apply text-inherit hover:text-inherit;
+}
+.fi-sidebar-item-icon {
+    @apply text-gray-300 hover:text-white hover:bg-gray-800;
+}
+.fi-dropdown-trigger button {
+    @apply text-gray-300 bg-white dark:bg-gray-800 dark:text-gray-300;
+} */
