@@ -20,7 +20,7 @@ class PostController extends Controller
         $perPage = $request->get('per_page', 10);
 
         $posts = QueryBuilder::for(Post::class)
-            ->allowedIncludes(['authors', 'featuredImage', 'seo'])
+            ->allowedIncludes(['authors', 'featuredImage', 'seo', 'categories', 'tags'])
             ->allowedSorts(['title', 'published_at', 'created_at', 'updated_at'])
             ->paginate($perPage);
 
@@ -30,7 +30,7 @@ class PostController extends Controller
     public function show(Tenant $tenant, string $id)
     {
         $post = QueryBuilder::for(Post::class)
-            ->allowedIncludes(['authors', 'featuredImage', 'seo'])
+            ->allowedIncludes(['authors', 'featuredImage', 'seo', 'categories', 'tags'])
             ->where('id', $id)
             ->firstOrFail();
 

@@ -15,10 +15,12 @@ class PostResource extends JsonResource
             'title'          => $this->title,
             'excerpt'        => $this->excerpt,
             'content'        => $this->content,
-            'seo'            => $this->seo,
-            'featured_image' => $this->featuredImage,
             'published_at'   => $this->published_at,
-            'created_at'     => $this->created_at,
+            'featured_image' => ImageResource::make($this->featuredImage),
+            'authors'        => AuthorResource::collection($this->whenLoaded('authors')),
+            'seo'            => SeoResource::make($this->whenLoaded('seo')),
+            'categories'     => SimpleCategoryResource::collection($this->whenLoaded('categories')),
+            'tags'           => SimpleTagResource::collection($this->whenLoaded('tags')),
         ];
     }
 }

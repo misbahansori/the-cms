@@ -22,6 +22,8 @@ class SimplePostResource extends JsonResource
             'featured_image' => ImageResource::make($this->featuredImage),
             'authors'        => AuthorResource::collection($this->whenLoaded('authors')),
             'seo'            => SeoResource::make($this->whenLoaded('seo')),
+            'categories'     => SimpleCategoryResource::collection($this->whenLoaded('categories')),
+            'tags'           => SimpleTagResource::collection($this->whenLoaded('tags')),
         ];
     }
 }
