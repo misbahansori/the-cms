@@ -30,7 +30,7 @@ class PostController extends Controller
     public function show(Tenant $tenant, string $id)
     {
         $post = QueryBuilder::for(Post::class)
-            ->allowedIncludes(['authors'])
+            ->allowedIncludes(['authors', 'featuredImage', 'seo'])
             ->where('id', $id)
             ->firstOrFail();
 
