@@ -20,8 +20,8 @@ class PostController extends Controller
         $perPage = $request->get('per_page', 10);
 
         $posts = QueryBuilder::for(Post::class)
-            ->allowedIncludes(['authors'])
-            ->allowedSorts(['title', 'published_at'])
+            ->allowedIncludes(['authors', 'featuredImage', 'seo'])
+            ->allowedSorts(['title', 'published_at', 'created_at', 'updated_at'])
             ->paginate($perPage);
 
         return SimplePostResource::collection($posts);
