@@ -19,11 +19,13 @@ php artisan clear-compiled
 # Recreate cache
 php artisan optimize
 
+node -v
+
 # Compile npm assets
-npm run prod
+npm run build
 
 # Run database migrations
-php artisan migrate --force
+php artisan migrate
 
 # Exit maintenance mode
 php artisan up

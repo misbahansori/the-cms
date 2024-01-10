@@ -17,6 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
@@ -24,4 +27,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          script: "cd /var/www/html && ./.scripts/deploy.sh"
+          script: "cd /var/www/cms && ./deploy.sh"
