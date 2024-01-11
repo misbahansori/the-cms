@@ -141,7 +141,15 @@ class PostResource extends Resource
                                                     ->required()
                                                     ->maxLength(255),
                                             ]),
-                                    ])
+
+                                    ]),
+                                Section::make()
+                                    ->label('Private')
+                                    ->schema([
+                                        Textarea::make('private_note')
+                                            ->label('Private note')
+                                            ->rows(6),
+                                    ]),
                             ])
                     ]),
             ]);
