@@ -48,8 +48,7 @@ class Post extends Model
 
     protected function scopePublished($query)
     {
-        return $query->where('status', Status::ReviewCompleted)
-            ->where('published_at', '<=', now());
+        return $query->where('published_at', '<=', now());
     }
 
     protected function publishStatus(): Attribute
