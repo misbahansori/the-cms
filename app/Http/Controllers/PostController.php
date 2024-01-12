@@ -22,6 +22,7 @@ class PostController extends Controller
         $posts = QueryBuilder::for(Post::class)
             ->allowedIncludes(['authors', 'featuredImage', 'seo', 'categories', 'tags'])
             ->allowedSorts(['title', 'published_at', 'created_at', 'updated_at'])
+            ->published()
             ->paginate($perPage);
 
         return SimplePostResource::collection($posts);

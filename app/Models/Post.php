@@ -46,6 +46,12 @@ class Post extends Model
         return $this->belongsToMany(User::class, 'author_post', 'post_id', 'author_id');
     }
 
+    protected function scopePublished($query)
+    {
+        return $query->where('status', Status::ReviewCompleted)
+            ->where('published_at', '<=', now());
+    }
+
     protected function publishStatus(): Attribute
     {
         return Attribute::make(function () {
