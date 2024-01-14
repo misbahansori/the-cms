@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tenant;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -38,8 +39,16 @@ class CategoryController extends Controller
         return CategoryResource::collection($categories);
     }
 
-    public function show(Category $category)
+    public function show(Tenant $tenant, string $slug)
     {
-        //
+        $category = QueryBuilder::for(Category::class)
+            ->allowedIncludes([
+                'seo',
+                AllowedInclude::count('posts_count', 'posts')
+            ])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        return CategoryResource::make($category);
     }
 }

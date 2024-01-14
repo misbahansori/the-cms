@@ -3,63 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
+use App\Http\Resources\TagResource;
+use App\Http\Controllers\Controller;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedInclude;
 
 class TagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $request->validate([
+            'per_page' => 'integer|min:1|max:100',
+        ]);
+
+        $perPage = request('per_page', 15);
+
+        $tags = QueryBuilder::for(Tag::class)
+            ->allowedFilters([
+                'name',
+                'slug'
+            ])
+            ->allowedIncludes([
+                'seo',
+                AllowedInclude::count('posts_count', 'posts')
+            ])
+            ->allowedSorts([
+                'name',
+                'slug',
+                'posts_count',
+            ])
+            ->paginate();
+
+        return TagResource::collection($tags);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show(Tenant $tenant, string $slug)
     {
-        //
-    }
+        $tag = QueryBuilder::for(Tag::class)
+            ->allowedIncludes([
+                'seo',
+                AllowedInclude::count('posts_count', 'posts')
+            ])
+            ->where('slug', $slug)
+            ->firstOrFail();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tag $tag)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Tag $tag)
-    {
-        //
+        return TagResource::make($tag);
     }
 }
