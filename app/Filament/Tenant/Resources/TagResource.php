@@ -9,13 +9,13 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
-use RalphJSmit\Filament\SEO\SEO;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Tenant\Form\Components\Seo;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Tenant\Resources\TagResource\Pages\EditTag;
 use App\Filament\Tenant\Resources\TagResource\Pages\ListTags;
@@ -37,27 +37,24 @@ class TagResource extends Resource
             ->schema([
                 Grid::make(3)
                     ->schema([
-                        Grid::make(1)
+                        Section::make()
                             ->columnSpan(2)
                             ->schema([
-                                Section::make()
-                                    ->schema([
-                                        TextInput::make('name')
-                                            ->required()
-                                            ->maxLength(255),
-                                        TextInput::make('slug')
-                                            ->slug(source: 'name')
-                                            ->required()
-                                            ->maxLength(255),
-                                        Textarea::make('description')
-                                            ->rows(3)
-                                    ]),
-                                Section::make('SEO')
-                                    ->columnSpan(2)
-                                    ->schema([
-                                        SEO::make(),
-                                    ])
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('slug')
+                                    ->slug(source: 'name')
+                                    ->required()
+                                    ->maxLength(255),
+                                Textarea::make('description')
+                                    ->rows(3)
                             ]),
+                        Section::make('SEO')
+                            ->columnSpan(2)
+                            ->schema([
+                                Seo::make(),
+                            ])
                     ]),
 
             ]);

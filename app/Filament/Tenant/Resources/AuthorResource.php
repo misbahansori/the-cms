@@ -12,12 +12,12 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
-use RalphJSmit\Filament\SEO\SEO;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Tenant\Form\Components\Seo;
 use Filament\Forms\Components\Actions\Action;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -83,7 +83,7 @@ class AuthorResource extends Resource
                             ->password()
                             ->dehydrated(false),
                     ]),
-                SEO::make(),
+                Seo::make(),
             ]);
     }
 

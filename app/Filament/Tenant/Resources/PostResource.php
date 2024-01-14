@@ -10,8 +10,8 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
-use RalphJSmit\Filament\SEO\SEO;
 use Filament\Forms\Components\Grid;
+
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Select;
@@ -24,6 +24,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\TernaryFilter;
+use App\Filament\Tenant\Form\Components\Seo;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\DateTimePicker;
 use Awcodes\Curator\Components\Forms\CuratorPicker;
@@ -86,7 +87,7 @@ class PostResource extends Resource
                                 Section::make('SEO')
                                     ->columnSpan(2)
                                     ->schema([
-                                        SEO::make(),
+                                        Seo::make(),
                                     ]),
                             ]),
                         Grid::make(1)

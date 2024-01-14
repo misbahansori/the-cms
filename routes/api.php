@@ -4,6 +4,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +17,8 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::prefix('{tenant}')
-    ->scopeBindings()
-    ->group(function () {
-        Route::get('/posts', [PostController::class, 'index']);
-        Route::get('/posts/{id}', [PostController::class, 'show']);
-    });
+Route::prefix('{tenant}')->group(function () {
+    Route::get('/posts', [PostController::class, 'index']);
+    Route::get('/posts/{id}', [PostController::class, 'show']);
+    Route::get('/categories', [CategoryController::class, 'index']);
+})->scopeBindings();

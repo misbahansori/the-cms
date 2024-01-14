@@ -35,7 +35,6 @@ class TenantResource extends Resource
                     ->required()
                     ->maxLength(255),
                 TextInput::make('site_url')
-                    ->required()
                     ->maxLength(255),
                 Select::make('users')
                     ->relationship('users', 'name')

@@ -12,8 +12,8 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
-use RalphJSmit\Filament\SEO\SEO;
 use Filament\Forms\Components\Grid;
+
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
@@ -21,6 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Validation\Rules\Unique;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Tenant\Form\Components\Seo;
 use Filament\Forms\Components\Actions\Action;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Tenant\Resources\CategoryResource\Pages\EditCategory;
@@ -43,36 +44,33 @@ class CategoryResource extends Resource
             ->schema([
                 Grid::make(3)
                     ->schema([
-                        Grid::make(1)
+                        Section::make()
                             ->columnSpan(2)
                             ->schema([
-                                Section::make()
+                                Grid::make()
                                     ->schema([
-                                        Grid::make()
-                                            ->schema([
-                                                Select::make('parent_id')
-                                                    ->relationship('parent', 'name')
-                                                    ->label('Parent Category')
-                                                    ->preload()
-                                                    ->searchable()
-                                            ])
-                                            ->columnSpanFull(),
-                                        TextInput::make('name')
-                                            ->required()
-                                            ->maxLength(255),
-                                        TextInput::make('slug')
-                                            ->slug(source: 'name')
-                                            ->required()
-                                            ->maxLength(255),
-                                        Textarea::make('description')
-                                            ->rows(3)
-                                            ->columnSpanFull(),
-                                    ]),
-                                Section::make('SEO')
-                                    ->columnSpan(2)
-                                    ->schema([
-                                        SEO::make(),
+                                        Select::make('parent_id')
+                                            ->relationship('parent', 'name')
+                                            ->label('Parent Category')
+                                            ->preload()
+                                            ->searchable()
                                     ])
+                                    ->columnSpanFull(),
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                                TextInput::make('slug')
+                                    ->slug(source: 'name')
+                                    ->required()
+                                    ->maxLength(255),
+                                Textarea::make('description')
+                                    ->rows(3)
+                                    ->columnSpanFull(),
+                            ]),
+                        Section::make('SEO')
+                            ->columnSpan(2)
+                            ->schema([
+                                Seo::make(),
                             ])
                     ])
             ]);
