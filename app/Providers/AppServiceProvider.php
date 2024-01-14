@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Tag;
+use App\Models\Page;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Media;
@@ -10,7 +11,6 @@ use App\Models\Tenant;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use App\Models\Category;
-use Filament\Pages\Page;
 use Illuminate\Support\Str;
 use Filament\Facades\Filament;
 use Illuminate\Database\Eloquent\Model;
@@ -37,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         Relation::enforceMorphMap([
             'user'     => User::class,
             'post'     => Post::class,
+            'page'     => Page::class,
             'category' => Category::class,
             'tag'      => Tag::class,
             'media'    => Media::class,
@@ -61,7 +62,7 @@ class AppServiceProvider extends ServiceProvider
                 ->dehydrateStateUsing(fn (string $state) => Str::slug($state));
         });
 
-        Page::$reportValidationErrorUsing = function (ValidationException $exception) {
+        \Filament\Pages\Page::$reportValidationErrorUsing = function (ValidationException $exception) {
             Notification::make()
                 ->title($exception->getMessage())
                 ->danger()

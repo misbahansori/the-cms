@@ -36,6 +36,11 @@ class Tenant extends Model
         return $this->hasMany(Post::class);
     }
 
+    public function pages(): HasMany
+    {
+        return $this->hasMany(Page::class);
+    }
+
     public function media(): HasMany
     {
         return $this->hasMany(Media::class);
