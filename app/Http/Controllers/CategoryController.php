@@ -22,10 +22,12 @@ class CategoryController extends Controller
         $categories = QueryBuilder::for(Category::class)
             ->allowedFilters([
                 'name',
-                'slug'
+                'slug',
             ])
             ->allowedIncludes([
                 'seo',
+                'parent',
+                'ancestors',
                 AllowedInclude::count('posts_count', 'posts')
             ])
             ->allowedSorts([
@@ -33,7 +35,7 @@ class CategoryController extends Controller
                 'slug',
                 'posts_count',
             ])
-            ->paginate();
+            ->paginate($perPage);
 
 
         return CategoryResource::collection($categories);
@@ -44,6 +46,8 @@ class CategoryController extends Controller
         $category = QueryBuilder::for(Category::class)
             ->allowedIncludes([
                 'seo',
+                'parent',
+                'ancestors',
                 AllowedInclude::count('posts_count', 'posts')
             ])
             ->where('slug', $slug)

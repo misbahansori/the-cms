@@ -15,6 +15,9 @@ class CategoryResource extends JsonResource
             'description' => $this->description,
             'posts_count' => $this->whenCounted('posts'),
             'seo'         => SeoResource::make($this->whenLoaded('seo')),
+            'parent'      => CategoryResource::make($this->whenLoaded('parent')),
+            'ancestors'   => CategoryResource::collection($this->whenLoaded('ancestors')),
+            'permalink'   => $this->whenLoaded('ancestors', fn () => $this->ancestors->reverse()->pluck('slug')->push($this->slug)->join('/')),
         ];
     }
 }
