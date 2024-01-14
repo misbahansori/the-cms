@@ -12,8 +12,10 @@ use Filament\Navigation\MenuItem;
 use Awcodes\Curator\CuratorPlugin;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
+use Awcodes\Overlook\OverlookPlugin;
 use Filament\Widgets\FilamentInfoWidget;
 use Filament\Http\Middleware\Authenticate;
+use Awcodes\Overlook\Widgets\OverlookWidget;
 use App\Filament\Tenant\Pages\ChangePassword;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -72,7 +74,17 @@ class TenantPanelProvider extends PanelProvider
                     ->navigationIcon('heroicon-o-photo')
                     ->navigationGroup('Content')
                     ->navigationSort(3)
-                    ->navigationCountBadge()
+                    ->navigationCountBadge(),
+                OverlookPlugin::make()
+                    ->sort(2)
+                    ->columns([
+                        'default' => 1,
+                        'sm' => 2,
+                        'md' => 3,
+                        'lg' => 4,
+                        'xl' => 5,
+                        '2xl' => null,
+                    ]),
             ])
             ->navigationGroups([
                 'Articles',
@@ -88,6 +100,9 @@ class TenantPanelProvider extends PanelProvider
                     ->label('Change Password')
                     ->icon('heroicon-o-lock-closed')
                     ->url(fn () => ChangePassword::getUrl()),
+            ])
+            ->widgets([
+                OverlookWidget::class,
             ]);
     }
 }

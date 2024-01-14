@@ -90,6 +90,12 @@ class CategoryResource extends Resource
                 TextColumn::make('parent.name')
                     ->label('Parent Category')
                     ->sortable(),
+                TextColumn::make('posts_count')
+                    ->counts('posts')
+                    ->label('Total posts')
+                    ->sortable()
+                    ->alignCenter()
+                    ->toggleable(),
                 TextColumn::make('description')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -72,6 +72,12 @@ class TagResource extends Resource
                     ->description(fn (Tag $tag) => $tag->slug)
                     ->sortable()
                     ->searchable(),
+                TextColumn::make('posts_count')
+                    ->counts('posts')
+                    ->label('Total posts')
+                    ->sortable()
+                    ->alignCenter()
+                    ->toggleable(),
                 TextColumn::make('description')
                     ->columnSpanFull()
                     ->searchable()

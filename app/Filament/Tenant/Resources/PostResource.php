@@ -160,6 +160,10 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('id')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 CuratorColumn::make('featured_image_id')
                     ->label('Featured Image')
                     ->size(120),
@@ -187,10 +191,24 @@ class PostResource extends Resource
                     ->tooltip(fn (Post $record) => $record->published_at?->format('d M Y H:i'))
                     ->badge()
                     ->toggleable(),
+                TextColumn::make('published_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(),
                 TextColumn::make('authors.name')
                     ->label('Author')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('categories.name')
+                    ->badge()
+                    ->label('Category')
+                    ->searchable()
+                    ->toggleable(),
+                TextColumn::make('tags.name')
+                    ->badge()
+                    ->label('Tags')
+                    ->searchable()
+                    ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
