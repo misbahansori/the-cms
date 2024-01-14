@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 use Filament\Facades\Filament;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Grid;
-
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
@@ -23,6 +22,7 @@ use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Tenant\Form\Components\Seo;
 use Filament\Forms\Components\Actions\Action;
+use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Tenant\Resources\CategoryResource\Pages\EditCategory;
 use App\Filament\Tenant\Resources\CategoryResource\Pages\CreateCategory;
@@ -66,6 +66,9 @@ class CategoryResource extends Resource
                                 Textarea::make('description')
                                     ->rows(3)
                                     ->columnSpanFull(),
+                                CuratorPicker::make('featured_image_id')
+                                    ->label('Featured Image')
+                                    ->relationship('featuredImage', 'id')
                             ]),
                         Section::make('SEO')
                             ->columnSpan(2)

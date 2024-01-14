@@ -16,6 +16,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Tenant\Form\Components\Seo;
+use Awcodes\Curator\Components\Forms\CuratorPicker;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Tenant\Resources\TagResource\Pages\EditTag;
 use App\Filament\Tenant\Resources\TagResource\Pages\ListTags;
@@ -48,7 +49,10 @@ class TagResource extends Resource
                                     ->required()
                                     ->maxLength(255),
                                 Textarea::make('description')
-                                    ->rows(3)
+                                    ->rows(3),
+                                CuratorPicker::make('featured_image_id')
+                                    ->label('Featured Image')
+                                    ->relationship('featuredImage', 'id')
                             ]),
                         Section::make('SEO')
                             ->columnSpan(2)
