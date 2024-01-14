@@ -20,8 +20,25 @@ class PostController extends Controller
         $perPage = $request->get('per_page', 10);
 
         $posts = QueryBuilder::for(Post::class)
-            ->allowedIncludes(['authors', 'featuredImage', 'seo', 'categories', 'tags'])
-            ->allowedSorts(['title', 'published_at', 'created_at', 'updated_at'])
+            ->allowedFilters([
+                'title',
+                'categories.slug',
+                'tags.slug',
+                'authors.slug',
+            ])
+            ->allowedIncludes([
+                'authors',
+                'featuredImage',
+                'seo',
+                'categories',
+                'tags'
+            ])
+            ->allowedSorts([
+                'title',
+                'published_at',
+                'created_at',
+                'updated_at'
+            ])
             ->published()
             ->paginate($perPage);
 
