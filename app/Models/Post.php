@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Status;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Concerns\BelongsToTenant;
+use App\Models\Concerns\HasFeaturedImage;
 use RalphJSmit\Laravel\SEO\Support\HasSEO;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +17,7 @@ class Post extends Model
     use HasFactory;
     use BelongsToTenant;
     use HasSEO;
+    use HasFeaturedImage;
 
     const STATUS_DRAFT = 'draft';
     const STATUS_PUBLISHED = 'published';
@@ -25,11 +27,6 @@ class Post extends Model
         'published_at' => 'datetime',
         'status'       => Status::class,
     ];
-
-    public function featuredImage(): BelongsTo
-    {
-        return $this->belongsTo(Media::class, 'featured_image_id', 'id');
-    }
 
     public function categories(): BelongsToMany
     {
