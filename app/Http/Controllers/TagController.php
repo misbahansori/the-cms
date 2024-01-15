@@ -34,7 +34,7 @@ class TagController extends Controller
                 'slug',
                 'posts_count',
             ])
-            ->paginate();
+            ->paginate($perPage);
 
         return TagResource::collection($tags);
     }

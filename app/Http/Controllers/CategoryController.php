@@ -37,7 +37,6 @@ class CategoryController extends Controller
             ])
             ->paginate($perPage);
 
-
         return CategoryResource::collection($categories);
     }
 
