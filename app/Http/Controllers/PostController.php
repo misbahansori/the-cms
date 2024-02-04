@@ -52,6 +52,17 @@ class PostController extends Controller
             ->where('id', $id)
             ->firstOrFail();
 
-        return PostResource::make($post);
+        $relatedPosts = QueryBuilder::for(Post::class)
+            ->where('id', '!=', $id)
+            ->whereHas('categories', function ($query) use ($post) {
+                $query->whereIn('categories.id', $post->categories->pluck('id'));
+            })
+            ->limit(5)
+            ->get();
+
+        return PostResource::make($post)
+            ->additional([
+                'related' => SimplePostResource::collection($relatedPosts)
+            ]);
     }
 }
